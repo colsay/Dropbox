@@ -42,9 +42,10 @@ app.get("/", (req, res) => {
 
 app.post("/data/:name", (req, res) => {
   // The cache will utilize the route route :name
-  // Go to postman, then create a post request to localhost:8080/data/squirtle
-  // In key: type in data
+  // After starting the server, go to postman, then create a post request to localhost:8080/data/squirtle
+  // In key, type in data
   // in value, type in {"name": "squirtle", "age": 5}
+  // After posting, check out your console
   cache[req.params.name] = req.body.data;
   console.log(cache);
   res.send(cache);
