@@ -7,8 +7,6 @@
  * 
  * Please read the documentation of express fileupload here: 
  * https://www.npmjs.com/package/express-fileupload
- * 
- * 
  *  #
 /*  ====================== */
 /**  */
@@ -26,3 +24,11 @@ const path = require("path");
 // This will be applied to EVERY request and response
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressFileUpload);
+
+// Set up object cache
+let cache = {};
+
+// Route handler
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/index.html");
+});
