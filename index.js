@@ -28,17 +28,24 @@ app.use(expressFileUpload);
 // Set up object cache
 let cache = {};
 
+// Route handler
 app.use("/", (req, res, next) => {
   console.log(req.url);
   console.log(req.method);
   next();
 });
+
 // Route handler
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
+app.post("/data/:name", (req, res) => {
+  // The cache will utilize the route route :name
+  cache[req.params.name] = req.body.data;
+});
+
 // Listen to any incoming requests
-app.listen(8080, () => {
+app.listen(3000, () => {
   console.log("Application listening to port 8080");
 });
