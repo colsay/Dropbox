@@ -32,3 +32,8 @@ let cache = {};
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
+
+// Listen to any incoming requests
+app.listen(8080, () => {
+  console.log("Application listening to port 8080");
+});
