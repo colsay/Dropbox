@@ -1,5 +1,15 @@
 # Dropbox with Cache :rocket:
 
+## To Run
+
+```
+npm install
+```
+
+```
+nodemon
+```
+
 ## Step 1 - Set up your project
 
 Set up your NPM project - npm init
