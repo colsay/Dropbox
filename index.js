@@ -1,8 +1,15 @@
 /**********************************************
- *
+ * Dropbox!
  * ==================================
  ***********************************************/
-/** #  #
+/** # 
+ * Being able to read, understand and utilize libraries is a key skill for any developer
+ * 
+ * Please read the documentation of express fileupload here: 
+ * https://www.npmjs.com/package/express-fileupload
+ * 
+ * 
+ *  #
 /*  ====================== */
 /**  */
 const app = require("express")();
@@ -15,5 +22,7 @@ const expressFileUpload = require("express-fileupload");
 const fs = require("fs");
 const path = require("path");
 
+// Utilize the node modules - this is the middleware
+// This will be applied to EVERY request and response
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressFileUpload);
