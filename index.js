@@ -28,6 +28,11 @@ app.use(expressFileUpload);
 // Set up object cache
 let cache = {};
 
+app.use("/", (req, res, next) => {
+  console.log(req.url);
+  console.log(req.method);
+  next();
+});
 // Route handler
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
