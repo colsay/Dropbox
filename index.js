@@ -28,6 +28,13 @@ app.use(expressFileUpload);
 // Set up object cache
 let cache = {};
 
+// Set up function that are promises
+
+// fs read file and fs write file
+fs.writeFile(/* name */, /* data */, ( err ) => {
+    
+});
+
 // Route handler
 app.use("/", (req, res, next) => {
   console.log(req.url);
