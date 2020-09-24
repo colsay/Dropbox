@@ -18,6 +18,7 @@ const expressFileUpload = require("express-fileupload");
 
 // These are the native modules that node already has
 const fs = require("fs");
+const { resolve } = require("path");
 const path = require("path");
 
 // Utilize the node modules - this is the middleware
@@ -28,13 +29,25 @@ app.use(expressFileUpload);
 // Set up object cache
 let cache = {};
 
+const directory = __dirname + path.sep + "uploads";
+
 // Set up function that are promises
+function writeFile(name, body) {
+  return new Promise((resolve, reject) => {
+    // fs read file and fs write file
+    fs.writeFile(directory, path.sep + name, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(name);
+      }
+    });
+  });
+}
 
-// fs read file and fs write file
-fs.writeFile(/* name */, /* data */, ( err ) => {
-    
-});
-
+function readFile(fileName) {
+  return new Promise((resolve, reject) => {});
+}
 // Route handler
 app.use("/", (req, res, next) => {
   console.log(req.url);
