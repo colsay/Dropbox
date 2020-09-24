@@ -46,7 +46,15 @@ function writeFile(name, body) {
 }
 
 function readFile(fileName) {
-  return new Promise((resolve, reject) => {});
+  return new Promise((resolve, reject) => {
+    fs.readFile(directory + path.sep + fileName, (err, body) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(body);
+      }
+    });
+  });
 }
 // Route handler
 app.use("/", (req, res, next) => {
