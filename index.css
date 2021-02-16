@@ -1,0 +1,24 @@
+body {
+  background-color: rgba(230, 76, 230, 0.529);
+}
+
+h1 {
+  font-size: 100px;
+  color: green;
+}
+
+input {
+  font-size: 20px;
+}
+
+#download {
+  background-color: rgb(15, 53, 97);
+  margin: 10px;
+  font-size: 40px;
+  border-radius: 10px;
+  color: rgb(201, 211, 14);
+}
+
+#download:hover {
+  cursor: pointer;
+}

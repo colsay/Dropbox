@@ -1,85 +1,60 @@
-/**********************************************
- * Dropbox!
- * ==================================
- ***********************************************/
-/** # 
- * Being able to read, understand and utilize libraries is a key skill for any developer
- * 
- * Please read the documentation of express fileupload here: 
- * https://www.npmjs.com/package/express-fileupload
- *  #
-/*  ====================== */
-/**  */
-const app = require("express")();
+var express = require('express');
+var upload = require('express-fileupload');
+var app = express();
+var arr = []
+var fs = require('fs')
 
-// These are the node modules that we installed
-const bodyParser = require("body-parser");
-const expressFileUpload = require("express-fileupload");
 
-// These are the native modules that node already has
-const fs = require("fs");
-const { resolve } = require("path");
-const path = require("path");
+app.use(express.static(__dirname));
+app.use(express.static('uploads'))
+app.use(upload())
 
-// Utilize the node modules - this is the middleware
-// This will be applied to EVERY request and response
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressFileUpload);
 
-// Set up object cache
-let cache = {};
+console.log('server started!')
 
-const directory = __dirname + path.sep + "uploads";
-
-// Set up function that are promises
-function writeFile(name, body) {
-  return new Promise((resolve, reject) => {
-    // fs read file and fs write file
-    fs.writeFile(directory, path.sep + name, (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(name);
-      }
-    });
-  });
-}
-
-function readFile(fileName) {
-  return new Promise((resolve, reject) => {
-    fs.readFile(directory + path.sep + fileName, (err, body) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(body);
-      }
-    });
-  });
-}
-// Route handler
-app.use("/", (req, res, next) => {
-  console.log(req.url);
-  console.log(req.method);
-  next();
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
 });
 
-// Route handler
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+app.post('/upload', (req, res) => {
 
-app.post("/data/:name", (req, res) => {
-  // The cache will utilize the route route :name
-  // After starting the server, go to postman, then create a post request to localhost:8080/data/squirtle
-  // In key, type in data
-  // in value, type in {"name": "squirtle", "age": 5}
-  // After posting, check out your console
-  cache[req.params.name] = req.body.data;
-  console.log(cache);
-  res.send(cache);
-});
+    if (req.files) {
+        console.log(req.files)
+        var file = req.files.filename
+        var fileName = file.name;
+        var fileLocation = __dirname + '/uploads/'
 
-// Listen to any incoming requests
-app.listen(3000, () => {
-  console.log("Application listening to port 8080");
-});
+        file.mv(__dirname + '/uploads/' + fileName, function (err) {
+            if (err) {
+                console.log(err)
+                res.send('error occured')
+            } else {
+                arr.push(fileName)
+                console.log(arr)
+
+                return res.redirect('/')
+
+            }
+        })
+    }
+})
+
+
+app.get('/getfiles', function (req, res) {
+    const files = fs.readdirSync('uploads')
+    res.json(files)
+
+
+})
+
+app.get('/download', function (req, res) {
+    console.log(req.query);
+    let file = Object.keys(req.query)
+    filepath = (__dirname + '/uploads/' + file)
+    res.download(filepath)
+
+})
+
+
+
+app.listen(8000, () => console.log('hello im port 8000'))

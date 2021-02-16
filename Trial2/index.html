@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Dropbox!</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+    <h3> Simple upload and download file server</h3>
+
+    <label for="upload" class="btn btn-raised">Upload</label>
+    <input class="hidden" id="upload" type="file" onchange="uploadFile(event)" />
+    <ol id="download"></ol>
+    <div id="toast"></div>
+
+    <script>
+        var downloadDOM = document.getElementById('download');
+        var toastDOM = document.getElementById('toast');
+        showUploadedFiles();
+
+        function uploadFile(event) {
+            console.log('inside uploadFile')
+            let target = event.target || event.srcElement || event.currentTarget;
+            let file = target.files[0];
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload/' + file.name, true);
+            xhr.setRequestHeader('Content-Type', 'application/octate-stream');
+            xhr.onreadystatechange = function () {
+                event = null;
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        showToastMessage(xhr.responseText, 'success');
+                        showUploadedFiles();
+                    } else {
+                        showToastMessage(xhr.responseText, 'error');
+                    }
+                }
+            }
+            xhr.send(file);
+            event.target.value = "";
+        }
+
+        function showUploadedFiles() {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', '/list', true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        let listOfFile = JSON.parse(xhr.responseText);
+                        let listOfFileHTML = ""
+                        for (var i = 0; i < listOfFile.length; i++) {
+                            listOfFileHTML = listOfFileHTML + "<li> <a href='/download/" + listOfFile[i] + "'>" + listOfFile[i] + "</a></li>"
+                        }
+                        downloadDOM.innerHTML = listOfFileHTML;
+                    } else {
+
+                    }
+                }
+            }
+            xhr.send();
+        }
+
+        function showToastMessage(msg, type) {
+            console.log('inside showtoast mesage', msg, type)
+            toastDOM.innerText = msg;
+            if (type === 'error') {
+                toastDOM.classList.add('toast-visible-error');
+                setTimeout(function () { toastDOM.classList.remove('toast-visible-error') }, 3000);
+            } else {
+                console.log('toastdom', toastDOM)
+                toastDOM.classList.add('toast-visible-success');
+                setTimeout(function () { toastDOM.classList.remove('toast-visible-success') }, 3000);
+            }
+        }
+    </script>
+</body>
+
+</html>

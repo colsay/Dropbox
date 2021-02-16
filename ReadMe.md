@@ -49,3 +49,27 @@ This should have a form so that you can upload files on the submit button.
 Ensure your application is listening to a specific port
 Within the terminal cd to the directory then run:
 node / nodemon index.js
+
+Important websites:
+
+https://www.remotestack.io/create-node-express-multer-file-upload-download-rest-api/
+
+https://github.com/remotestack377/node-file-upload-api (useful 4)
+
+https://loopback.io/doc/en/lb4/File-upload-download.html
+
+https://loizenai.com/node-js-rest-api-file-upload/#overview-how-to-build-nodejs-restapi-file-upload-to-mysql-postgresql (useful 3)
+
+https://ashwanibakshii.blogspot.com/2019/11/upload-and-download-file-in-node_2.html
+
+https://www.c-sharpcorner.com/blogs/upload-and-download-file-in-node
+
+https://grokonez.com/node-js/nodejs-express-upload-multipartfiles-images-multer-jquery-ajax-bootstrap (most useful)
+
+https://github.com/remotestack377/node-file-upload-api (useful too)
+
+https://www.remotestack.io/create-node-express-multer-file-upload-download-rest-api/
+
+https://github.com/AzharHusain/youtube-file-upload-download
+
+https://ashwanibakshii.blogspot.com/2019/11/upload-and-download-file-in-node_2.html
